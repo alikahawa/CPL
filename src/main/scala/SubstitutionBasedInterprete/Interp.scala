@@ -1,5 +1,10 @@
 package SubstitutionBasedInterprete
 
+/**
+ * This interpreter uses substitution to enable us to implement functions.
+ * It is an eager interpreter, also known as call-by-value or strict interpreter.
+ * It uses left-to-right evaluation order.
+ */
 object Interp {
   def interp(e: ExprC): Value =e match {
     case TrueC() => BoolV(true)
