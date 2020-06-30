@@ -35,7 +35,25 @@ We implement an interpreter that uses substitution, and it is eager( also known 
 - Multi-Argument Functions
 - Multi-Binder let Expressions
 
+## Environment based interpreter
+Though we have a working definition of functions, we feel unease about it!
+First our interpreter does not look up identifier, and its behavior is defined to be an error!!! While absolutely correct.
 
+Another problem with substitution is that it traverse the source program, substitution travers everything, and force the program to be 
+traversed once when substitution and once when interpreting. And the last problem is that our interpreter has and needs to access the source to interpret it.
+
+Simply said substitution has two main problems:
+- It is computationally expensive (Multiple traversals of the Abstract Syntax Tree(AST))
+- Requires two functions that both traverse the AST (i.e. substitute, and interpret).
+
+Solution is Environment:
+- Defer substitution resulting in new data structure called environment.
+- Avoids the need for source to source rewriting
+- Maps nicely to low-level machine representations
+- Solve name shadowing problem and name capturing
+- Remember where is the set of substitutions that a term is closed under.
+
+Remember that we are not changing the language itself, we are only changing the implementation strategy for the programming language.
 
 ## Grammars used throughout the project
 ```
