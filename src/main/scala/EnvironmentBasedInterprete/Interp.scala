@@ -2,7 +2,7 @@ package EnvironmentBasedInterprete
 
 object Interp {
 // Every List[Bind] is just the data structure Environment
-  
+
   def interp(e: ExprC): Value = interp(e, Nil)
 
   def interp(e: ExprC, nv: List[Bind]): Value =  e match {

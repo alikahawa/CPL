@@ -55,6 +55,20 @@ Solution is Environment:
 
 Remember that we are not changing the language itself, we are only changing the implementation strategy for the programming language.
 
+## Mutation interpreter
+
+This interpreter will add constructs for state and recursion language.
+To allow mutation boxes have been added. 
+
+The main differences between store and environment:
+- Store allow mutation, i.e. you can change value of variable not in scope
+- With the help of store, recursive functions with multiple parameters are now allowed, and it is all because we have the pointer step in between,
+this avoids Interceptions and help to achieve the last value. It was before that possible not because of the environment but because of the Z-combinator.
+
+Let-rec accepts a sequence of possibly-mutually-recursive binders. That is each identifier bound in a let-rec expression should be in scope in each binder.
+
+UninitializedC is here to help desugaring let-rec as a dummy value in the AppC list of expressions. 
+
 ## Grammars used throughout the project
 ```
 module types
