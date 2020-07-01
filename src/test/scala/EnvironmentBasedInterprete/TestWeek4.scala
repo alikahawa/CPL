@@ -84,11 +84,11 @@ class TestWeek4 extends FunSuite {
     }
   }
 
-  test("test look up function") {
-    assertResult(NumV(2)) {
-      Interp.lookUp("x", List(Bind("x", NumV(2)), Bind("y", NumV(1))))
-    }
-  }
+//  test("test look up function") {
+//    assertResult(NumV(2)) {
+//      Interp.lookUp("x", List(Bind("x", NumV(2)), Bind("y", NumV(1))))
+//    }
+//  }
 
   test("test closure") {
     assertResult(NumV(1)) {

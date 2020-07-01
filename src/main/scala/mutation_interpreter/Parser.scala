@@ -141,4 +141,59 @@ object Parser {
     case _ =>
       throw ParseExc("Error! final case in parser")
   }
+
+  /**
+   * Write a 0-argument function that sets the identifier `x` to the value
+   * of the identifier `y` and returns false.
+   * You can assume `x` and `y` are in scope.
+   */
+  val variable =
+    """
+      (lambda () (seq (set x y) false))
+    """
+
+  /**
+   * Write a 0-argument function that sets the value of the box identified by `x`
+   * to the value in the box identified by `y` and returns false.
+   * You can assume `x` and `y` are in scope.
+   */
+  val box =
+    """
+      (lambda ()
+              (seq (setbox x (unbox y))
+                  false
+              )
+          )
+    """
+
+  /**
+   * Implement two mutually-recursive single-argument functions, `even` and `odd`.
+   *
+   * Your `even` function should return `true` if the input is `0`,
+   * `false` if the input is `1`, and otherwise use a recursive call of `odd`
+   * to check whether the number is odd.
+   *
+   * Your `odd` function should return `false` if the input is `0`,
+   * `true` if the input is `1`, and otherwise use a recursive call of `even`
+   * to check whether the number is even.
+   */
+  val evenAndOdd =
+    """
+      (letrec ((even (lambda (n)
+                            (if (num= n 0)
+                              true
+                              (if (num= n 1)
+                                false
+                                (odd (- n 1))))))
+               (odd (lambda (n)
+                            (if (num= n 1)
+                              true
+                              (if (num= n 0)
+                                false
+                                (even (- n 1)))
+                                    )))
+              )
+        (list even odd))
+    """
+
 }

@@ -16,3 +16,10 @@ abstract class InterpException(msg: String = null) extends Exception(msg)
 
 case class CustomInterpException(msg: String = null) extends InterpException(msg)
 
+case class CannotParseException(msg: String) extends ParseException(msg)
+
+case class CannotInterpException(msg: String) extends InterpException(msg)
+
+case class NotIntegerException(msg: String) extends InterpException(msg)
+
+case class CannotDesugarException(msg: String) extends DesugarException(msg)

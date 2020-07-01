@@ -223,7 +223,7 @@ class Test extends FunSuite {
   }
 
   test("list construction1") {
-    assertResult(ConsV(NumV(1), ConsV(NilV(), NilV()))) {
+    assertResult(ConsV(NumV(1),NilV())) {
       interp(desugar(parse("(list 1 nil)")))
     }
   }
@@ -370,7 +370,7 @@ class Test extends FunSuite {
   }
 
   test("lsit with nilC nil") {
-    assertResult(ConsV(NilV(), NilV())) {
+    assertResult(NilV()) {
       imLazy("(list nil)")
     }
   }
@@ -674,7 +674,7 @@ class Test extends FunSuite {
   }
 
   test("list construction100") {
-    assertResult(ConsV(NumV(1), ConsV(NilV(), NilV()))) {
+    assertResult(ConsV(NumV(1),NilV())) {
       interp(desugar(parse("(list 1 nil)")))
     }
   }
@@ -911,7 +911,7 @@ class Test extends FunSuite {
   }
 
   test("use free var") {
-    assertResult(FunV(FdC(List("z"), PlusC(NumC(1), ValC(NumV(1)))))) {
+    assertResult(FunV(FdC(List("z"), PlusC(ValC(NumV(1)), ValC(NumV(1)))))) {
       imLazy("(  (lambda (x) (lambda (z) (+ 1 x) )   ) 1)")
     }
   }
