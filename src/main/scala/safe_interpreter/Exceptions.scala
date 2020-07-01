@@ -13,3 +13,7 @@ case class InterpExc(s: String)     extends InterpException(s)
 case class CannotInterpException(s: String) extends  InterpException(s)
 case class TypeExc(s: String)       extends TypeException(s)
 case class TypeExceptionE(s: String)extends TypeException(s)
+
+case class CannotDesugarException(s: String) extends DesugarException(s)
+case class NotStringException (s: String) extends InterpException(s)
+case class NotIntegerException (s: String) extends InterpException(s)
