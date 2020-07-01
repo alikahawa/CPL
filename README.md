@@ -102,6 +102,25 @@ Note that, since we are now working with a type checked language, the is-list co
 
 - Subtyping: You do not need to implement function subtyping, and should not write test cases that assume it will be implemented.
 
+
+## Lazy interpreter
+Our interpreter use memoization: once a thunked computation has been interpreted, the interpreter memorizes the value so that each thunk is never interpreted more than once.
+
+Our language is also extended with a force construct that adds first-class support for strictness to our otherwise lazy language. An expression (force e) should be treated as a strictness point that eagerly and recursively coerces all thunks into values.
+
+let-rec does interpret binding expressions lazily (call-by-need).
+
+The Either[(ExprC, List[Bind]), Value] type is used to represent a thunk that either records an expression and the environment under which that expression is closed or a value.
+
+The var annotation on the value argument of a ThunkV denotes a mutable field.
+
+Since environments may be cyclic, the ClosV and ThunkV case classes are defined to override the toString and hashCode methods, which might otherwise attempt a divergent traversal of a cyclic environment.
+
+The strict function does evaluate thunks to values. We use this function to execute previously delayed computations when needed. This way we avoid doing a computation multiple times.
+
+Lists are composed of (possibly thunked) computations. We've ensured that our implementation of force recursively applies strictness to list elements so we can obtain values out of interpreted lists.
+
+
 # Grammars used throughout the project
 ```
 module types
@@ -278,4 +297,24 @@ abstract class ParseException   extends RuntineException
 abstract class DesugarException extends RuntimeException
 abstract class InterpException  extends RuntimeException
 abstract class TypeException    extends RuntimeException
+```
+
+### Values for lazy
+```$xslt
+import java.util.UUID.randomUUID // for generating a random ID and hash code
+
+case class ClosV(f: FdC, env: List[Bind]) extends Value {
+  override def toString: String = s"ClosV($f, <env>)"
+  override def hashCode(): Int = randomUUID().hashCode()
+}
+case class ThunkV(var value: Either[(ExprC, List[Bind]), Value]) extends Value {
+  override def toString: String = value match {
+    case Left((e, _)) => s"ThunkV($e, <env>)"
+    case Right(v) => s"ThunkV($v)"
+  }
+  override def hashCode(): Int = randomUUID().hashCode()
+}
+case class ConsV(head: Value, tail: Value) extends Value
+case class NilV() extends Value
+case class UninitializedV() extends Value
 ```
